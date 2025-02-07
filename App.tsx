@@ -1,20 +1,32 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import React from "react";
+import { NavigationContainer } from "@react-navigation/native";
+import { createStackNavigator } from "@react-navigation/stack";
+import { StatusBar } from "expo-status-bar";
+import Config from "react-native-config";
+import HomeScreen from "./src/screens/home-screen";
+import { store } from "./src/store";
+import { Provider } from "react-redux";
+import { ThemeProvider } from "./src/contexts/ThemeContext";
+import BooksScreen from "./src/screens/books-screen";
 
-export default function App() {
+const Stack = createStackNavigator();
+
+const App = () => {
+  console.log("API_URL:", Config.API_URL);
+
   return (
-    <View style={styles.container}>
-      <Text>Open up App.tsx to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <Provider store={store}>
+      <ThemeProvider>
+        <NavigationContainer>
+          <StatusBar style="auto" />
+          <Stack.Navigator>
+            <Stack.Screen name="Home" component={HomeScreen} />
+            <Stack.Screen name="Books" component={BooksScreen} />
+          </Stack.Navigator>
+        </NavigationContainer>
+      </ThemeProvider>
+    </Provider>
   );
-}
+};
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+export default App;
