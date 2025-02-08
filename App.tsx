@@ -12,8 +12,6 @@ import BooksScreen from "./src/screens/books-screen";
 const Stack = createStackNavigator();
 
 const App = () => {
-  console.log("API_URL:", Config.API_URL);
-
   return (
     <Provider store={store}>
       <ThemeProvider>
