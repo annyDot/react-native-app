@@ -8,7 +8,7 @@ interface ThemeContextProps {
   theme: Theme;
   toggleTheme: () => void;
 }
-
+// setting to undefined forces wrapping with <ThemeProvider> - will throw an explicit error if component is not wrapped
 const ThemeContext = createContext<ThemeContextProps | undefined>(undefined);
 
 export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({
@@ -19,6 +19,7 @@ export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({
   useEffect(() => {
     (async () => {
       const storedTheme = await AsyncStorage.getItem("theme");
+      // Appearance.getColorScheme() returns the user preferred scheme on device
       setTheme(
         (storedTheme as Theme) || Appearance.getColorScheme() || "light"
       );
